@@ -26,5 +26,6 @@ module.exports = {
     'class-methods-use-this': 'off',
     'no-console': 'off',
     'padded-blocks': 'off',
+    'consistent-return': 'off',
   },
 };

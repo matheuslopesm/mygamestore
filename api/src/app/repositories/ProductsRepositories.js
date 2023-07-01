@@ -11,6 +11,16 @@ class ProductsRepository {
 
     return rows;
   }
+
+  async findById(id) {
+    const [row] = await db.query(`
+    SELECT products.*
+    FROM products
+    WHERE products.id = $1
+    `, [id]);
+
+    return row;
+  }
 }
 
 module.exports = new ProductsRepository();
