@@ -26,7 +26,17 @@ class EmployeeController {
     response.json(employee);
   }
 
-  delete() { }
+  async delete(request, response) {
+    const { id } = request.params;
+
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid employee id' });
+    }
+
+    await EmployeesRepository.delete(id);
+
+    response.status(204);
+  }
 
   store() { }
 
