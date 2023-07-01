@@ -1,4 +1,4 @@
-const ProductsRepository = require('../repositories/ProductsRepositories');
+const ProductsRepository = require('../repositories/ProductsRepository');
 const isValidUUID = require('../utils/isValidUUID');
 
 class ProductController {
@@ -26,16 +26,16 @@ class ProductController {
     response.json(product);
   }
 
-  delete() {
+  async delete(request, response) {
+    const { id } = request.params;
 
-  }
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid product id' });
+    }
 
-  store() {
+    await ProductsRepository.delete(id);
 
-  }
-
-  update() {
-
+    response.status(204);
   }
 }
 
