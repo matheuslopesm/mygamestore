@@ -46,10 +46,23 @@ class EmployeeRepository {
     ename, esurname, eemail,
   }) {
     const [row] = await db.query(`
-      INSERT INTO products(ename, esurname, eemail)
+      INSERT INTO employees(ename, esurname, eemail)
       VALUES ($1, $2, $3)
       RETURNING *
     `, [ename, esurname, eemail]);
+
+    return row;
+  }
+
+  async update(id, {
+    ename, esurname, eemail,
+  }) {
+    const [row] = await db.query(`
+      UPDATE employees
+      SET ename = $1, esurname = $2, eemail = $3
+      WHERE id = $4
+      RETURNING *
+    `, [ename, esurname, eemail, id]);
 
     return row;
   }

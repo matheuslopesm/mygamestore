@@ -64,7 +64,28 @@ class EmployeeController {
     return response.status(201).json(employee);
   }
 
-  update() { }
+  async update(request, response) {
+    const { id } = request.params;
+    const {
+      ename, esurname, eemail,
+    } = request.body;
+
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid employee id ' });
+    }
+
+    if (!ename) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+
+    const employee = await EmployeesRepository.update(id, {
+      ename,
+      esurname,
+      eemail,
+    });
+
+    response.json(employee);
+  }
 }
 
 module.exports = new EmployeeController();
