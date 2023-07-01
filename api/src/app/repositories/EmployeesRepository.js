@@ -22,12 +22,12 @@ class EmployeeRepository {
     return row;
   }
 
-  async findByName(ename) {
+  async findByEmail(eemail) {
     const [row] = await db.query(`
     SELECT *
     FROM employees
-    WHERE ename = $1
-    `, [ename]);
+    WHERE eemail = $1
+    `, [eemail]);
 
     return row;
   }
