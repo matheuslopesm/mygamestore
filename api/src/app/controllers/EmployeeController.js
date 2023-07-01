@@ -1,5 +1,5 @@
-const EmployeesRepository = require('../repositories/EmployeesRopository');
-// const isValidUUID = require('../utils/isValidUUID');
+const EmployeesRepository = require('../repositories/EmployeesRepository');
+const isValidUUID = require('../utils/isValidUUID');
 
 class EmployeeController {
   async index(request, response) {
@@ -10,7 +10,21 @@ class EmployeeController {
     response.json(employees);
   }
 
-  show() { }
+  async show(request, response) {
+    const { id } = request.params;
+
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid employee id' });
+    }
+
+    const employee = await EmployeesRepository.findById(id);
+
+    if (!employee) {
+      return response.status(400).json({ error: 'Employee not found' });
+    }
+
+    response.json(employee);
+  }
 
   delete() { }
 

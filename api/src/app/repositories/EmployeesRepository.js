@@ -11,6 +11,26 @@ class EmployeeRepository {
 
     return rows;
   }
+
+  async findById(id) {
+    const [row] = await db.query(`
+    SELECT employees.*
+    FROM employees
+    WHERE employees.id = $1
+    `, [id]);
+
+    return row;
+  }
+
+  async findByName(ename) {
+    const [row] = await db.query(`
+    SELECT *
+    FROM employees
+    WHERE ename = $1
+    `, [ename]);
+
+    return row;
+  }
 }
 
 module.exports = new EmployeeRepository();
