@@ -43,6 +43,19 @@ class ProductsRepository {
 
     return row;
   }
+
+  async update(id, {
+    pname, pvalue, pcompany, pdescription,
+  }) {
+    const [row] = await db.query(`
+      UPDATE products
+      SET pname = $1, pvalue = $2, pcompany = $3, pdescription = $4
+      WHERE id = $5
+      RETURNING *
+    `, [pname, pvalue, pcompany, pdescription, id]);
+
+    return row;
+  }
 }
 
 module.exports = new ProductsRepository();

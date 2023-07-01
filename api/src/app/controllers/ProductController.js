@@ -60,6 +60,30 @@ class ProductController {
 
     return response.status(201).json(product);
   }
+
+  async update(request, response) {
+    const { id } = request.params;
+    const {
+      pname, pvalue, pcompany, pdescription,
+    } = request.body;
+
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid product id ' });
+    }
+
+    if (!pname) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+
+    const product = await ProductsRepository.update(id, {
+      pname,
+      pvalue,
+      pcompany,
+      pdescription,
+    });
+
+    response.json(product);
+  }
 }
 
 module.exports = new ProductController();
