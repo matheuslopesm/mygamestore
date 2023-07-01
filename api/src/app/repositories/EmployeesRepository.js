@@ -41,6 +41,18 @@ class EmployeeRepository {
 
     return deleteOp;
   }
+
+  async create({
+    ename, esurname, eemail,
+  }) {
+    const [row] = await db.query(`
+      INSERT INTO products(ename, esurname, eemail)
+      VALUES ($1, $2, $3)
+      RETURNING *
+    `, [ename, esurname, eemail]);
+
+    return row;
+  }
 }
 
 module.exports = new EmployeeRepository();

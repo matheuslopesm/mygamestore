@@ -38,7 +38,31 @@ class EmployeeController {
     response.status(204);
   }
 
-  store() { }
+  async store(request, response) {
+    const {
+      ename, esurname, eemail,
+    } = request.body;
+
+    if (!ename) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+
+    if (eemail) {
+      const employeeExists = await EmployeesRepository.findByEmail(eemail);
+
+      if (employeeExists) {
+        return response.status(400).json({ error: 'This employee already exists' });
+      }
+    }
+
+    const employee = await EmployeesRepository.create({
+      ename,
+      esurname,
+      eemail,
+    });
+
+    return response.status(201).json(employee);
+  }
 
   update() { }
 }
