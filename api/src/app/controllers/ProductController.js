@@ -1,6 +1,13 @@
+const ProductsRepository = require('../repositories/ProductsRepositories');
+// const isValidUUID = require('../utils/isValidUUID');
+
 class ProductController {
-  index(request, response) {
-    response.send('Funcionando');
+  async index(request, response) {
+    const { orderBy } = request.query;
+    const products = await ProductsRepository.findAll(orderBy);
+
+    console.log({ products });
+    response.json(products);
   }
 
   show() {

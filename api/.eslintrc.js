@@ -24,5 +24,7 @@ module.exports = {
   rules: {
     'linebreak-style': 'off',
     'class-methods-use-this': 'off',
+    'no-console': 'off',
+    'padded-blocks': 'off',
   },
 };
