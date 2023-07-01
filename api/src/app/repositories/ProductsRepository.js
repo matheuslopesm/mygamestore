@@ -22,6 +22,16 @@ class ProductsRepository {
     return row;
   }
 
+  async findByName(pname) {
+    const [row] = await db.query(`
+    SELECT *
+    FROM products
+    WHERE pname = $1
+    `, [pname]);
+
+    return row;
+  }
+
   async delete(id) {
     const deleteOp = await db.query(`
       DELETE FROM products

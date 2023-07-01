@@ -51,6 +51,14 @@ class ProductController {
       return response.status(400).json({ error: 'Value is required' });
     }
 
+    if (pname) {
+      const productExists = await ProductsRepository.findByName(pname);
+
+      if (productExists) {
+        return response.status(400).json({ error: 'This product already exists' });
+      }
+    }
+
     const product = await ProductsRepository.create({
       pname,
       pvalue,
