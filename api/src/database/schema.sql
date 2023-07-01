@@ -9,3 +9,10 @@ CREATE TABLE IF NOT EXISTS products (
   pcompany VARCHAR(50),
   pdescription TEXT
 );
+
+CREATE TABLE IF NOT EXISTS employees (
+  id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+  ename VARCHAR(50) NOT NULL,
+  esurname VARCHAR(50) NOT NULL,
+  eemail VARCHAR UNIQUE
+);
