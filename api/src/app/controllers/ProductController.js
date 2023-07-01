@@ -37,6 +37,29 @@ class ProductController {
 
     response.status(204);
   }
+
+  async store(request, response) {
+    const {
+      pname, pvalue, pcompany, pdescription,
+    } = request.body;
+
+    if (!pname) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+
+    if (!pvalue) {
+      return response.status(400).json({ error: 'Value is required' });
+    }
+
+    const product = await ProductsRepository.create({
+      pname,
+      pvalue,
+      pcompany,
+      pdescription,
+    });
+
+    return response.status(201).json(product);
+  }
 }
 
 module.exports = new ProductController();

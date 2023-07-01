@@ -31,6 +31,18 @@ class ProductsRepository {
 
     return deleteOp;
   }
+
+  async create({
+    pname, pvalue, pcompany, pdescription,
+  }) {
+    const [row] = await db.query(`
+      INSERT INTO products(pname, pvalue, pcompany, pdescription)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+    `, [pname, pvalue, pcompany, pdescription]);
+
+    return row;
+  }
 }
 
 module.exports = new ProductsRepository();
