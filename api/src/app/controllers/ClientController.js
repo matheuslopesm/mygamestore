@@ -39,7 +39,36 @@ class ClientController {
     response.status(204);
   }
 
-  store() { }
+  async store(request, response) {
+    const {
+      cname, csurname, ccpf, cemail,
+    } = request.body;
+
+    if (!cname) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+
+    if (!ccpf) {
+      return response.status(400).json({ error: 'CPF is required' });
+    }
+
+    if (ccpf) {
+      const clientExists = await ClientsRepository.findByCpf(ccpf);
+
+      if (clientExists) {
+        return response.status(400).json({ error: 'This client already exists' });
+      }
+    }
+
+    const client = await ClientsRepository.create({
+      cname,
+      csurname,
+      ccpf,
+      cemail,
+    });
+
+    return response.status(201).json(client);
+  }
 
   update() { }
 

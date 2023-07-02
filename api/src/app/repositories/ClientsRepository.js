@@ -22,6 +22,16 @@ class ClientsRepository {
     return row;
   }
 
+  async findByCpf(ccpf) {
+    const [row] = await db.query(`
+    SELECT *
+    FROM clients
+    WHERE ccpf = $1
+    `, [ccpf]);
+
+    return row;
+  }
+
   async delete(id) {
     const deleteOp = await db.query(`
     DELETE FROM clients
@@ -30,6 +40,18 @@ class ClientsRepository {
     `, [id]);
 
     return deleteOp;
+  }
+
+  async create({
+    cname, csurname, ccpf, cemail,
+  }) {
+    const [row] = await db.query(`
+      INSERT INTO clients(cname, csurname, ccpf, cemail)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+    `, [cname, csurname, ccpf, cemail]);
+
+    return row;
   }
 
 }
