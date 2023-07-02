@@ -22,6 +22,16 @@ class ClientsRepository {
     return row;
   }
 
+  async delete(id) {
+    const deleteOp = await db.query(`
+    DELETE FROM clients
+    WHERE id = $1
+    RETURNING *
+    `, [id]);
+
+    return deleteOp;
+  }
+
 }
 
 module.exports = new ClientsRepository();
