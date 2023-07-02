@@ -1,5 +1,5 @@
 const ClientsRepository = require('../repositories/ClientsRepository');
-// const isValidUUID = require('../utils/isValidUUID');
+const isValidUUID = require('../utils/isValidUUID');
 
 class ClientController {
 
@@ -11,7 +11,21 @@ class ClientController {
     response.json(clients);
   }
 
-  show() { }
+  async show(request, response) {
+    const { id } = request.params;
+
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid client id' });
+    }
+
+    const client = await ClientsRepository.findById(id);
+
+    if (!client) {
+      return response.status(400).json({ error: 'Client not found' });
+    }
+
+    response.json(client);
+  }
 
   store() { }
 

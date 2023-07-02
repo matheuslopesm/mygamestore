@@ -12,6 +12,16 @@ class ClientsRepository {
     return rows;
   }
 
+  async findById(id) {
+    const [row] = await db.query(`
+    SELECT clients.*
+    FROM clients
+    WHERE clients.id = $1
+    `, [id]);
+
+    return row;
+  }
+
 }
 
 module.exports = new ClientsRepository();
