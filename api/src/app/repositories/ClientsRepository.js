@@ -22,12 +22,12 @@ class ClientsRepository {
     return row;
   }
 
-  async findByCpf(ccpf) {
+  async findByCpfOrEmail(ccpf, cemail) {
     const [row] = await db.query(`
     SELECT *
     FROM clients
-    WHERE ccpf = $1
-    `, [ccpf]);
+    WHERE ccpf = $1 OR cemail = $2
+    `, [ccpf, cemail]);
 
     return row;
   }
@@ -54,6 +54,18 @@ class ClientsRepository {
     return row;
   }
 
+  async update(id, {
+    cname, csurname, ccpf, cemail,
+  }) {
+    const [row] = await db.query(`
+      UPDATE clients
+      SET cname = $1, csurname = $2, ccpf = $3, cemail = $4
+      WHERE id = $5
+      RETURNING *
+    `, [cname, csurname, ccpf, cemail, id]);
+
+    return row;
+  }
 }
 
 module.exports = new ClientsRepository();

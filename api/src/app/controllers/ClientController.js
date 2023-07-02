@@ -52,11 +52,11 @@ class ClientController {
       return response.status(400).json({ error: 'CPF is required' });
     }
 
-    if (ccpf) {
-      const clientExists = await ClientsRepository.findByCpf(ccpf);
+    if (ccpf || cemail) {
+      const clientExists = await ClientsRepository.findByCpfOrEmail(ccpf, cemail);
 
       if (clientExists) {
-        return response.status(400).json({ error: 'This client already exists' });
+        return response.status(400).json({ error: 'This CPF or Email already exists' });
       }
     }
 
@@ -70,7 +70,29 @@ class ClientController {
     return response.status(201).json(client);
   }
 
-  update() { }
+  async update(request, response) {
+    const { id } = request.params;
+    const {
+      cname, csurname, ccpf, cemail,
+    } = request.body;
+
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid client id ' });
+    }
+
+    if (!cname) {
+      return response.status(400).json({ error: 'Name is required' });
+    }
+
+    const client = await ClientsRepository.update(id, {
+      cname,
+      csurname,
+      ccpf,
+      cemail,
+    });
+
+    response.json(client);
+  }
 
 }
 
