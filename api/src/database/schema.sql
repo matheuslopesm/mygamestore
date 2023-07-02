@@ -16,3 +16,11 @@ CREATE TABLE IF NOT EXISTS employees (
   esurname VARCHAR(50) NOT NULL,
   eemail VARCHAR UNIQUE
 );
+
+CREATE TABLE IF NOT EXISTS clients (
+  id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+  cname VARCHAR(50) NOT NULL,
+  csurname VARCHAR(50) NOT NULL,
+  ccpf VARCHAR UNIQUE,
+  cemail VARCHAR UNIQUE
+);
