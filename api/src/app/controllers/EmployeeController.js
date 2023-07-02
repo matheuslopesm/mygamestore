@@ -35,7 +35,7 @@ class EmployeeController {
 
     await EmployeesRepository.delete(id);
 
-    response.status(204);
+    response.sendStatus(204);
   }
 
   async store(request, response) {
@@ -47,11 +47,19 @@ class EmployeeController {
       return response.status(400).json({ error: 'Name is required' });
     }
 
+    if (!esurname) {
+      return response.status(400).json({ error: 'Surname is required' });
+    }
+
+    if (!eemail) {
+      return response.status(400).json({ error: 'Email is required' });
+    }
+
     if (eemail) {
       const employeeExists = await EmployeesRepository.findByEmail(eemail);
 
       if (employeeExists) {
-        return response.status(400).json({ error: 'This employee already exists' });
+        return response.status(400).json({ error: 'This email already belongs to an employee' });
       }
     }
 

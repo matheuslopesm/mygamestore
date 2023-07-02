@@ -36,7 +36,7 @@ class ClientController {
 
     await ClientsRepository.delete(id);
 
-    response.status(204);
+    response.sendStatus(204);
   }
 
   async store(request, response) {
@@ -46,6 +46,10 @@ class ClientController {
 
     if (!cname) {
       return response.status(400).json({ error: 'Name is required' });
+    }
+
+    if (!csurname) {
+      return response.status(400).json({ error: 'Surname is required' });
     }
 
     if (!ccpf) {

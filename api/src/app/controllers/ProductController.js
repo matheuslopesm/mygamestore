@@ -35,7 +35,7 @@ class ProductController {
 
     await ProductsRepository.delete(id);
 
-    response.status(204);
+    response.sendStatus(204);
   }
 
   async store(request, response) {
