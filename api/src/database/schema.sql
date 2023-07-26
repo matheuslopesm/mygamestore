@@ -7,14 +7,16 @@ CREATE TABLE IF NOT EXISTS products (
   pname VARCHAR(100) UNIQUE NOT NULL,
   pvalue MONEY NOT NULL,
   pcompany VARCHAR(50),
-  pdescription TEXT
+  pdescription TEXT,
+  PRIMARY KEY (pname)
 );
 
 CREATE TABLE IF NOT EXISTS employees (
   id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
   ename VARCHAR(50) NOT NULL,
   esurname VARCHAR(50) NOT NULL,
-  eemail VARCHAR UNIQUE NOT NULL
+  eemail VARCHAR UNIQUE NOT NULL,
+  PRIMARY KEY (eemail)
 );
 
 CREATE TABLE IF NOT EXISTS clients (
@@ -22,7 +24,8 @@ CREATE TABLE IF NOT EXISTS clients (
   cname VARCHAR(50) NOT NULL,
   csurname VARCHAR(50) NOT NULL,
   ccpf VARCHAR UNIQUE NOT NULL,
-  cemail VARCHAR UNIQUE
+  cemail VARCHAR UNIQUE,
+  PRIMARY KEY (ccpf)
 );
 
 CREATE TABLE IF NOT EXISTS sales (
