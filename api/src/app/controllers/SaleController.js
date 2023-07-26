@@ -68,6 +68,42 @@ class SaleController {
 
     response.status(201).json(sale);
   }
+
+  async update(request, response) {
+    const { id } = request.params;
+    const {
+      saledate, salepname, saleeemail, saleccpf,
+    } = request.body;
+
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid sale id' });
+    }
+
+    if (!saledate) {
+      return response.status(400).json({ error: 'Date is required' });
+    }
+
+    if (!salepname) {
+      return response.status(400).json({ error: 'Product name is required' });
+    }
+
+    if (!saleeemail) {
+      return response.status(400).json({ error: 'Employee e-mail is required' });
+    }
+
+    if (!saleccpf) {
+      return response.status(400).json({ error: 'Client cpf is required' });
+    }
+
+    const sale = await SalesRepository.update(id, {
+      saledate,
+      salepname,
+      saleeemail,
+      saleccpf,
+    });
+
+    response.json(sale);
+  }
 }
 
 module.exports = new SaleController();

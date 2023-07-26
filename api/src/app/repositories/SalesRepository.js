@@ -43,6 +43,19 @@ class SalesRepository {
 
     return row;
   }
+
+  async update(id, {
+    saledate, salepname, saleeemail, saleccpf,
+  }) {
+    const [row] = await db.query(`
+      UPDATE sales
+      SET saledate = $1, salepname = $2, saleeemail = $3, saleccpf = $4
+      WHERE id = $5
+      RETURNING *
+    `, [saledate, salepname, saleeemail, saleccpf, id]);
+
+    return row;
+  }
 }
 
 module.exports = new SalesRepository();
