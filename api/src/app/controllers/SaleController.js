@@ -37,6 +37,37 @@ class SaleController {
 
     response.sendStatus(204);
   }
+
+  async store(request, response) {
+    const {
+      saledate, salepname, saleeemail, saleccpf,
+    } = request.body;
+
+    if (!saledate) {
+      return response.status(400).json({ error: 'Date is required' });
+    }
+
+    if (!salepname) {
+      return response.status(400).json({ error: 'Product name is required' });
+    }
+
+    if (!saleeemail) {
+      return response.status(400).json({ error: 'Employee e-mail is required' });
+    }
+
+    if (!saleccpf) {
+      return response.status(400).json({ error: 'Client cpf is required' });
+    }
+
+    const sale = await SalesRepository.create({
+      saledate,
+      salepname,
+      saleeemail,
+      saleccpf,
+    });
+
+    response.status(201).json(sale);
+  }
 }
 
 module.exports = new SaleController();

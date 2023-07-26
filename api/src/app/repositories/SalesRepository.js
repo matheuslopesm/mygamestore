@@ -6,7 +6,7 @@ class SalesRepository {
     const rows = await db.query(`
     SELECT *
     FROM sales
-    ORDER BY product_name ${direction}
+    ORDER BY salepname ${direction}
     `);
 
     return rows;
@@ -30,6 +30,18 @@ class SalesRepository {
     `, [id]);
 
     return deleteOp;
+  }
+
+  async create({
+    saledate, salepname, saleeemail, saleccpf,
+  }) {
+    const [row] = await db.query(`
+      INSERT INTO sales(saledate, salepname, saleeemail, saleccpf)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *
+    `, [saledate, salepname, saleeemail, saleccpf]);
+
+    return row;
   }
 }
 

@@ -26,13 +26,13 @@ CREATE TABLE IF NOT EXISTS clients (
 );
 
 CREATE TABLE IF NOT EXISTS sales (
-  sale_id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
-  datavenda DATE NOT NULL,
-  product_name VARCHAR(100) NOT NULL,
-  employee_email VARCHAR NOT NULL,
-  client_cpf VARCHAR NOT NULL,
-  PRIMARY KEY (sale_id),
-  FOREIGN KEY (product_name) REFERENCES products (pname),
-  FOREIGN KEY (employee_email) REFERENCES employees (eemail),
-  FOREIGN KEY (client_cpf) REFERENCES clients (ccpf)
+  id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+  saledate VARCHAR(10) NOT NULL,
+  salepname VARCHAR(100) NOT NULL,
+  saleeemail VARCHAR NOT NULL,
+  saleccpf VARCHAR NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (salepname) REFERENCES products (pname),
+  FOREIGN KEY (saleeemail) REFERENCES employees (eemail),
+  FOREIGN KEY (saleccpf) REFERENCES clients (ccpf)
 );
