@@ -12,6 +12,15 @@ class SalesRepository {
     return rows;
   }
 
+  async findById(id) {
+    const [row] = await db.query(`
+    SELECT sales.*
+    FROM sales
+    WHERE sales.id = $1
+    `, [id]);
+
+    return row;
+  }
 }
 
 module.exports = new SalesRepository();
